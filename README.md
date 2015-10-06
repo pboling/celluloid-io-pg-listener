@@ -141,3 +141,8 @@ spec.add_dependency 'celluloid-io-pg-listener', '~> 0.1'
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
+[semver]: http://semver.org/
+[pvc]: http://docs.rubygems.org/read/chapter/16#page74
+[railsbling]: http://www.railsbling.com
+[documentation]: http://rdoc.info/github/pboling/celluloid-io-pg-listener/frames
+[homepage]: https://github.com/pboling/celluloid-io-pg-listener
