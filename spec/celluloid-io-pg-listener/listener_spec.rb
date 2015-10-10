@@ -1,11 +1,7 @@
-require 'spec_helper'
+RSpec.describe CelluloidIOPGListener do
 
-describe CelluloidIOPGListener do
   it 'has a version number' do
     expect(CelluloidIOPGListener::VERSION).not_to be nil
   end
 
-  it 'does something useful' do
-    expect(false).to eq(true)
-  end
 end

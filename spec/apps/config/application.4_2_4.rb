@@ -1,14 +1,12 @@
-require "rails"
-require "rails/all"
-require "action_view/testing/resolvers"
-require "rails/test_help"
-
 require "celluloid-io-pg-listener" # this gem
 
 module Rails_4_2_4
   class Application < Rails::Application
-    config.root = File.expand_path("../../..", __FILE__)
+    config.root = File.join(Rails.root, "spec/apps")
+
     config.cache_classes = true
+
+    config.autoload_paths += Dir["#{Rails.root}/app/models/*/**/*"]
 
     config.eager_load = false
     config.serve_static_files  = true
@@ -27,23 +25,7 @@ module Rails_4_2_4
     config.middleware.delete "ActionDispatch::Flash"
     config.middleware.delete "ActionDispatch::BestStandardsSupport"
     config.secret_key_base = "49837489qkuweoiuoqwehisuakshdjksadhaisdy78o34y138974xyqp9rmye8yrpiokeuioqwzyoiuxftoyqiuxrhm3iou1hrzmjk"
-    routes.append do
-      get "/" => "welcome#index"
-    end
   end
-end
-
-class WelcomeController < ActionController::Base
-  include Rails.application.routes.url_helpers
-  layout "application"
-  self.view_paths = [ActionView::FixtureResolver.new(
-                         "layouts/application.html.erb" => "<%= yield %>",
-                         "welcome/index.html.erb"=> "Hello from index.html.erb",
-                     )]
-
-  def index
-  end
-
 end
 
 Rails_4_2_4::Application.initialize!

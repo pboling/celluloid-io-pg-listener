@@ -1,0 +1,6 @@
+test:
+  adapter: "postgresql"
+  database: "celluloid_io_pg_listener_test"
+  username: "foss"
+  encoding: "unicode"
+  host: "localhost"

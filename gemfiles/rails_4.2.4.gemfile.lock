@@ -70,6 +70,7 @@ GEM
       timers (>= 4.1.1)
     celluloid-supervision (0.20.5)
       timers (>= 4.1.1)
+    database_cleaner (1.5.0)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     globalid (0.3.6)
@@ -154,9 +155,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord
   appraisal
   bundler (~> 1.10)
   celluloid-io-pg-listener!
+  database_cleaner
   pg
   rails (~> 4.2.4)
   rake (~> 10.0)

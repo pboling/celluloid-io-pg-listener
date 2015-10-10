@@ -6,3 +6,4 @@ require "celluloid-io-pg-listener"
 RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
+
