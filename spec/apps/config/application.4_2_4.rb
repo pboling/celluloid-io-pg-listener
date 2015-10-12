@@ -1,8 +1,29 @@
+require "rails"
+require "active_record"
+
+database_yml_filepath = File.dirname(__FILE__) + "/database.yml"
+configs = YAML.load_file(database_yml_filepath)
+puts "configs are:\n#{configs.inspect}"
+if RUBY_PLATFORM == "java"
+  configs["test"]["adapter"] = "jdbcpostgresql"
+end
+ActiveRecord::Base.configurations = configs
+
+db_name = (ENV["DB"] || "test").to_sym
+ActiveRecord::Base.establish_connection(db_name)
+
+ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/../log/debug.log")
+ActiveRecord::Migration.verbose = false
+
+require "active_record/railtie"
+
 require "celluloid-io-pg-listener" # this gem
 
 module Rails_4_2_4
   class Application < Rails::Application
-    config.root = File.join(Rails.root, "spec/apps")
+    # When running commands from the spec/apps directory we can't override
+    #   Rails root like this or it would be spec/apps/spec/apps
+    config.root = File.join(Rails.root, "spec/apps") unless ENV["SKIP_RAILS_ROOT_OVERRIDE"]
 
     config.cache_classes = true
 
@@ -20,6 +41,8 @@ module Rails_4_2_4
     config.action_controller.allow_forgery_protection = false
 
     config.active_support.deprecation = :stderr
+
+    config.active_record.schema_format = :sql
 
     config.middleware.delete "Rack::Lock"
     config.middleware.delete "ActionDispatch::Flash"

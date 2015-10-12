@@ -1,6 +1,10 @@
-test:
+default: &default
   adapter: "postgresql"
   database: "celluloid_io_pg_listener_test"
   username: "foss"
   encoding: "unicode"
   host: "localhost"
+test:
+  <<: *default
+development:
+  <<: *default

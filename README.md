@@ -116,7 +116,23 @@ Open psql and create the test database:
 Create the test user:
 
     =# CREATE ROLE foss WITH CREATEDB LOGIN;
-    =# ALTER DATABASE celluloid_io_pg_listener_test OWNER TO "foss"
+    =# ALTER DATABASE celluloid_io_pg_listener_test OWNER TO "foss";
+
+Then setup the schema:
+
+    cd spec/apps
+    bundle install
+    SKIP_RAILS_ROOT_OVERRIDE=true bundle exec rake test_db_setup
+
+
+NOTE: If you need to recreate `db/structure.sql` from the contents of the test database:
+
+    SKIP_RAILS_ROOT_OVERRIDE=true bundle exec rake db:structure:dump
+
+Then run the specs (can use `rspec` or `rake`):
+
+    cd ../..
+    appraisal rspec
 
 ## Contributing
 

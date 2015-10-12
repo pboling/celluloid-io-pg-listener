@@ -1,3 +1,22 @@
+require "rails"
+require "active_record"
+
+database_yml_filepath = File.dirname(__FILE__) + "/database.yml"
+configs = YAML.load_file(database_yml_filepath)
+puts "configs are:\n#{configs.inspect}"
+if RUBY_PLATFORM == "java"
+  configs["test"]["adapter"] = "jdbcpostgresql"
+end
+ActiveRecord::Base.configurations = configs
+
+db_name = (ENV["DB"] || "test").to_sym
+ActiveRecord::Base.establish_connection(db_name)
+
+ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/../log/debug.log")
+ActiveRecord::Migration.verbose = false
+
+require "active_record/railtie"
+
 require "celluloid-io-pg-listener" # this gem
 
 module Rails_3_2_22
@@ -20,6 +39,8 @@ module Rails_3_2_22
     config.action_controller.allow_forgery_protection = false
 
     config.active_support.deprecation = :stderr
+
+    config.active_record.schema_format = :sql
 
     config.middleware.delete "Rack::Lock"
     config.middleware.delete "ActionDispatch::Flash"
