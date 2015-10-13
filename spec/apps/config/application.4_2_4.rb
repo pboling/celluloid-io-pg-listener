@@ -3,7 +3,6 @@ require "active_record"
 
 database_yml_filepath = File.dirname(__FILE__) + "/database.yml"
 configs = YAML.load_file(database_yml_filepath)
-puts "configs are:\n#{configs.inspect}"
 if RUBY_PLATFORM == "java"
   configs["test"]["adapter"] = "jdbcpostgresql"
 end
