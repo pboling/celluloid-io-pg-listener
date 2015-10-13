@@ -2,7 +2,9 @@ language: ruby
 rvm:
   - 2.1.2
   - 2.2.3
-before_install: gem install bundler -v 1.10.6
+before_install:
+  - gem install bundler -v 1.10.6
+  - bin/setup
 gemfile:
   - gemfiles/rails_4.2.4.gemfile
   - gemfiles/rails_3.2.22.gemfile
