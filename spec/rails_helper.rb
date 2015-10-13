@@ -8,7 +8,8 @@ ENV["RAILS_ENV"] = "test"
 require "rails"
 require "active_record"
 
-ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/debug.log")
+# this logging style not compatible with Travis
+# ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/debug.log")
 ActiveRecord::Migration.verbose = false
 
 database_yml_filepath = File.dirname(__FILE__) + "/apps/config/database.yml"

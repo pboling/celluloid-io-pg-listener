@@ -8,7 +8,8 @@ RSpec::Core::RakeTask.new(:spec)
 require "rails"
 require "active_record"
 
-ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/spec/apps/log/debug.log")
+# this logging style not compatible with Travis
+# ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/spec/apps/log/debug.log")
 ActiveRecord::Migration.verbose = false
 
 database_yml_filepath = File.dirname(__FILE__) + "/spec/apps/config/database.yml"

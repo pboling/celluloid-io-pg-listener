@@ -12,7 +12,8 @@ ActiveRecord::Base.configurations = configs
 db_name = (ENV["DB"] || "test").to_sym
 ActiveRecord::Base.establish_connection(db_name)
 
-ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/../log/debug.log")
+# this logging style not compatible with Travis
+# ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/../log/debug.log")
 ActiveRecord::Migration.verbose = false
 
 require "active_record/railtie"
