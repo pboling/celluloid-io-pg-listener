@@ -2,6 +2,8 @@
 
 Simple way to NOTIFY and LISTEN to channels in PostgreSQL
 
+The goal is to integrate the listener client with a Rails project, and that is underway in the spec/ folder, but as yet unfinished.  Standalone the listener client works great.
+
 Inspired by https://gist.github.com/tpitale/3915671
 
 | Project                 |  Celluloid IO PG Listener   |
