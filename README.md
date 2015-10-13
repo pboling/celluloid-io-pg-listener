@@ -125,6 +125,7 @@ Or, run the specs without rake:
 
 NOTE: If you need to recreate `db/structure.sql` from the contents of the test database:
 
+    cd spec/apps
     SKIP_RAILS_ROOT_OVERRIDE=true bundle exec rake db:structure:dump
 
 ## Contributing
