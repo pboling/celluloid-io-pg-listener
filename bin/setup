@@ -8,10 +8,8 @@ bundle install
 # NOTE: Assumes current user has ability to create roles in psql
 psql -U `whoami` -f bin/setup.sql
 echo "Setup Role foss"
-psql -U `whoami` << EOF
-CREATE DATABASE celluloid_io_pg_listener_test;
-ALTER DATABASE celluloid_io_pg_listener_test OWNER TO "foss";
-EOF
+psql -c 'CREATE DATABASE celluloid_io_pg_listener_test;' -U foss
+psql -c 'ALTER DATABASE celluloid_io_pg_listener_test OWNER TO "foss";' -U foss
 echo "Setup Database celluloid_io_pg_listener_test"
 
 cd spec/apps
