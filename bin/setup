@@ -5,3 +5,16 @@ IFS=$'\n\t'
 bundle install
 
 # Do any other automated setup that you need to do here
+# NOTE: Assumes current user has ability to create roles in psql
+psql -U `whoami` -f bin/setup.sql
+psql -U `whoami` << EOF
+CREATE DATABASE celluloid_io_pg_listener_test;
+ALTER DATABASE celluloid_io_pg_listener_test OWNER TO "foss";
+EOF
+
+cd spec/apps
+bundle install
+SKIP_RAILS_ROOT_OVERRIDE=true bundle exec rake test_db_setup
+
+cd ../..
+appraisal rspec
