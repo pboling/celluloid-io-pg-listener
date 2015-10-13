@@ -26,11 +26,12 @@ end
 #
 namespace :db do
   namespace :structure do
-    desc 'Comment out the plpgsql lines from structure.sql so that a non-root user can create the test database'
+    desc "Comment out the plpgsql lines from structure.sql so that a non-root user can create the test database"
     task :fix_plpgsql do
 
       lines_to_strike = [
-        'CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;',
+        "SET lock_timeout = 0;",
+        "CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;",
         "COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';",
       ]
 
@@ -69,6 +70,6 @@ namespace :db do
 end # namespace
 
 # Inform Rake that this should be run every time rake db:structure:dump is run
-Rake::Task['db:structure:dump'].enhance do
-  Rake::Task['db:structure:fix_plpgsql'].invoke
+Rake::Task["db:structure:dump"].enhance do
+  Rake::Task["db:structure:fix_plpgsql"].invoke
 end
