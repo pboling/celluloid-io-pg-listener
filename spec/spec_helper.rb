@@ -44,13 +44,16 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 
   # See https://github.com/celluloid/celluloid/wiki/Gotchas#testing
-  config.before(:each) do
+  config.before(:each, celluloid: true) do
     Celluloid.boot
   end
-  config.after(:each) do
+  config.after(:each, celluloid: true) do
     Celluloid.shutdown
   end
 
 end
 
-$CELLULOID_DEBUG = false
+$CELLULOID_DEBUG = ENV["CELLULOID_DEBUG"] && ENV["CELLULOID_DEBUG"] != "false" # default false
+if $CELLULOID_DEBUG
+  Celluloid.task_class = Celluloid::Task::Threaded # For Celluloid backtraces
+end

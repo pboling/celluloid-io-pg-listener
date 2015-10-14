@@ -37,7 +37,10 @@ CREATE FUNCTION notify_on_users_delete_function() RETURNS trigger
     AS $$
 BEGIN
   RAISE NOTICE 'DELETE TRIGGER called on %', TG_TABLE_NAME;
-  PERFORM pg_notify('users_delete', json_build_object('table', TG_TABLE_NAME, 'id', OLD.id, 'name', OLD.name, 'type', TG_OP)::text);
+  PERFORM pg_notify('users_delete', json_build_object('table', TG_TABLE_NAME,
+                                                      'id', OLD.id,
+                                                      'name', OLD.name,
+                                                      'type', TG_OP)::text);
   RETURN NEW;
 END;
 $$;
@@ -52,7 +55,10 @@ CREATE FUNCTION notify_on_users_insert_function() RETURNS trigger
     AS $$
 BEGIN
   RAISE NOTICE 'INSERT TRIGGER called on %', TG_TABLE_NAME;
-  PERFORM pg_notify('users_insert', json_build_object('table', TG_TABLE_NAME, 'id', NEW.id, 'name', NEW.name, 'type', TG_OP)::text);
+  PERFORM pg_notify('users_insert', json_build_object('table', TG_TABLE_NAME,
+                                                      'id', NEW.id,
+                                                      'name', NEW.name,
+                                                      'type', TG_OP)::text);
   RETURN NEW;
 END;
 $$;
@@ -67,7 +73,11 @@ CREATE FUNCTION notify_on_users_update_function() RETURNS trigger
     AS $$
 BEGIN
   RAISE NOTICE 'UPDATE TRIGGER called on %', TG_TABLE_NAME;
-  PERFORM pg_notify('users_update', json_build_object('table', TG_TABLE_NAME, 'id', NEW.id, 'name', NEW.name, 'type', TG_OP)::text);
+  PERFORM pg_notify('users_update', json_build_object('table', TG_TABLE_NAME,
+                                                      'id', NEW.id,
+                                                      'new_name', NEW.name,
+                                                      'old_name', OLD.name,
+                                                      'type', TG_OP)::text);
   RETURN NEW;
 END;
 $$;
@@ -135,6 +145,27 @@ ALTER TABLE ONLY users
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: user_deleted; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER user_deleted BEFORE DELETE ON users FOR EACH ROW EXECUTE PROCEDURE notify_on_users_delete_function();
+
+
+--
+-- Name: user_inserted; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER user_inserted BEFORE INSERT ON users FOR EACH ROW EXECUTE PROCEDURE notify_on_users_insert_function();
+
+
+--
+-- Name: user_updated; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER user_updated BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROCEDURE notify_on_users_update_function();
 
 
 --

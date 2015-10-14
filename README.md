@@ -45,60 +45,105 @@ Find a data base that exists that you want to run notifications through.  Won't 
 so doesn't matter which one you pick.  Then pick an arbitrary name for the channel.  Only requirement is that the server
 and the client use the same database name and channel name or they won't be communicating.
 
-In an irb session
+In an irb session start the server, taking care to:
+- replace the database names with your own
+- replace the channel name, if you want, they are arbitrary, and don't need to be "created" in the DB.
 
 ```ruby
 >> require "celluloid-io-pg-listener"
 
 => true
 
->> CelluloidIOPGListener::Server.new(dbname: "test_database", channel: "test_channel" )
+>> $CELLULOID_DEBUG=true
+=> true
 
-I, [2015-10-06T12:38:43.728686 #5880]  INFO -- : Server will send notifications to archer_test:test
+>> server = CelluloidIOPGListener::Examples::Server.new(dbname: "celluloid_io_pg_listener_test", channel: "users_insert")
 
-=> #<Celluloid::Proxy::Cell(CelluloidIOPGListener::Server:0x3ff732194f24) @dbname="test_database" @channel="test_channel" @sleep_interval=0.1 @run_interval=1>
+D, [2015-10-14T12:59:31.840206 #23209] DEBUG -- : Server will send notifications to celluloid_io_pg_listener_test:users_insert
 
-I, [2015-10-06T12:38:44.105265 #5880]  INFO -- : Notified test
+=> #<Celluloid::Proxy::Cell(CelluloidIOPGListener::Examples::Server:0x3ff71a6f6db8) @client_extracted_signature=#<CelluloidIOPGListener::Initialization::ClientExtractedSignature:0x007fee34dec310 @channel="users_insert", @conninfo_hash={:dbname=>"celluloid_io_pg_listener_test"}, @super_signature=[]>>
 
->> CelluloidIOPGListener::Listener.new(dbname: "test_database", channel: "test_channel" )
+>> server.start
+=> #<Celluloid::Proxy::Async(CelluloidIOPGListener::Examples::Server)>
 
-=> #<Celluloid::Proxy::Cell(CelluloidIOPGListener::Listener:0x3fd6ace33cb8) @dbname="test_database" @listening=true @pg_connection=#<PG::Connection:0x007fad59c5f978> @actions={"test_channel"=>:do_something}>
-
-I, [2015-10-06T12:40:38.110541 #5952]  INFO -- : Client will for notifications on test_database:test_channel
-I, [2015-10-06T12:40:38.110822 #5952]  INFO -- : Starting Listening
-I, [2015-10-06T12:40:50.117444 #5952]  INFO -- : Received notification: ["test", 5968, "1444160450"]
-I, [2015-10-06T12:40:50.117518 #5952]  INFO -- : Doing Something with Payload: 1444160450 on test
-I, [2015-10-06T12:40:50.117541 #5952]  INFO -- : 1444160450
-I, [2015-10-06T12:40:51.107977 #5952]  INFO -- : Received notification: ["test", 5968, "1444160451"]
-I, [2015-10-06T12:40:51.108071 #5952]  INFO -- : Doing Something with Payload: 1444160451 on test
-I, [2015-10-06T12:40:51.108104 #5952]  INFO -- : 1444160451
-I, [2015-10-06T12:40:52.112797 #5952]  INFO -- : Received notification: ["test", 5968, "1444160452"]
-I, [2015-10-06T12:40:52.112881 #5952]  INFO -- : Doing Something with Payload: 1444160452 on test
-I, [2015-10-06T12:40:52.112911 #5952]  INFO -- : 1444160452
+D, [2015-10-14T12:59:36.115639 #23209] DEBUG -- : Notified users_insert
+D, [2015-10-14T12:59:37.107589 #23209] DEBUG -- : Notified users_insert
+D, [2015-10-14T12:59:38.112089 #23209] DEBUG -- : Notified users_insert
+D, [2015-10-14T12:59:39.112341 #23209] DEBUG -- : Notified users_insert
 ```
 
-The Listener class included is just a proof of concept.  It shows you how to use the Client module to make your own listener class that does what you need done.
+The notifications will just keep flowing, 1 per second as the example server is configured by default.  Now in another irb session:
+
+```
+>> CelluloidIOPGListener::Examples::ListenerClientByInheritance.new(dbname: "celluloid_io_pg_listener_test", channel: "users_insert", callback_method: :foo_bar)
+
+=> #<Celluloid::Proxy::Cell(CelluloidIOPGListener::Examples::ListenerClientByInheritance:0x3fe50d93f15c) @client_extracted_signature=#<CelluloidIOPGListener::Initialization::ClientExtractedSignature:0x007fca1b27c738 @channel="users_insert", @conninfo_hash={:dbname=>"celluloid_io_pg_listener_test"}, @super_signature=[{}]> @callback_method=:foo_bar @listening=true @pg_connection=#<PG::Connection:0x007fca1b287b38> @actions={"users_insert"=>:foo_bar}>
+
+I, [2015-10-14T12:59:46.127120 #23223]  INFO -- : Received notification: ["users_insert", 23220, "1444852786"]
+I, [2015-10-14T12:59:47.127021 #23223]  INFO -- : Received notification: ["users_insert", 23220, "1444852787"]
+I, [2015-10-14T12:59:48.127152 #23223]  INFO -- : Received notification: ["users_insert", 23220, "1444852788"]
+I, [2015-10-14T12:59:49.127509 #23223]  INFO -- : Received notification: ["users_insert", 23220, "1444852789"]
+```
+
+Simply exit the sessions to end the test.
+
+Or keep the client running, and only exit the server and do a real test.
+
+If you have downloaded the gem source, cd to the gem's directory, and run `bin/setup` to create the test database.
+
+Open `psql` and `\c celluloid_io_pg_listener_test`
+
+```
+pboling=# \c celluloid_io_pg_listener_test
+You are now connected to database "celluloid_io_pg_listener_test" as user "pboling".
+celluloid_io_pg_listener_test=# insert into users (name) values ('jack');
+NOTICE:  INSERT TRIGGER called on users
+INSERT 0 1
+celluloid_io_pg_listener_test=# insert into users (name) values ('jill');
+NOTICE:  INSERT TRIGGER called on users
+INSERT 0 1
+celluloid_io_pg_listener_test=# \q
+```
+
+In the irb session with the Client still running you will see new notifications:
+
+```
+I, [2015-10-14T13:42:55.511294 #25295]  INFO -- : Received notification: ["users_insert", 25304, "{\"table\" : \"users\", \"id\" : 1, \"name\" : \"jack\", \"type\" : \"INSERT\"}"]
+I, [2015-10-14T13:43:03.841323 #25295]  INFO -- : Received notification: ["users_insert", 25304, "{\"table\" : \"users\", \"id\" : 2, \"name\" : \"jill\", \"type\" : \"INSERT\"}"]
+```
+
+A more advanced client could be made to deserialize that JSON and get real work done.  That's where you come in! ;)
+
+The example [Client (Listener) class included with the gem](https://github.com/pboling/celluloid-io-pg-listener/blob/master/lib/celluloid-io-pg-listener/examples/client.rb) is just a proof of concept.  It shows you how to use the `CelluloidIOPGListener::Client` module to make your own listener class that does what you need done.  You could, for example, push the payload of the notification to Redis, to be worked by Sidekiq or Resque.
 
 ```ruby
 module CelluloidIOPGListener
-  # An example Client class
-  class Listener
+  module Examples
+    class Client
 
-    include CelluloidIOPGListener::Client
+      include CelluloidIOPGListener::Client
 
-    def initialize(dbname:, channel:)
-      info "Client will for notifications on #{dbname}:#{channel}"
-      @dbname = dbname
-      async.start_listening
-      async.listen(channel, :do_something)
-    end
+      # Defining initialize is optional,
+      #   unless you have custom args you need to handle
+      #   aside from those used by the CelluloidIOPGListener::Client
+      # But if you do define it, use a splat,
+      #   hash or array splat should work,
+      #   depending on your signature needs.
+      # With either splat, only pass the splat params to super,
+      #   and handle all other params locally.
+      #
+      # def initialize(optional_arg = nil, *options)
+      #   @optional_arg = optional_arg # handle it here, don't pass it on!
+      #   super(*options)
+      # end
 
-    def do_something(channel, payload)
-      unlisten_wrapper(channel, payload) do
-        info payload
+      def insert_callback(channel, payload)
+        # <-- within the unlisten_wrapper's block if :insert_callback is the callback_method
+        debug "#{self.class} channel is #{channel}"
+        debug "#{self.class} payload is #{payload}"
       end
-    end
 
+    end
   end
 end
 ```

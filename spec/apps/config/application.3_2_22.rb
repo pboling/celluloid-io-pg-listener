@@ -21,7 +21,9 @@ require "celluloid-io-pg-listener" # this gem
 
 module Rails_3_2_22
   class Application < Rails::Application
-    config.root = File.join(Rails.root, "spec/apps")
+    # When running commands from the spec/apps directory we can't override
+    #   Rails root like this or it would be spec/apps/spec/apps
+    config.root = File.join(Rails.root, "spec/apps") unless ENV["SKIP_RAILS_ROOT_OVERRIDE"]
 
     config.cache_classes = true
 

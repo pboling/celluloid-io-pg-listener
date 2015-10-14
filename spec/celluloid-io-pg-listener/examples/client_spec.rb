@@ -1,4 +1,4 @@
-RSpec.describe CelluloidIOPGListener::Examples::Client do
+RSpec.describe CelluloidIOPGListener::Examples::Client, celluloid: true do
 
   let(:channel) { "foo" }
   let(:payload) { "bar" }

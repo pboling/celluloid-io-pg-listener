@@ -1,4 +1,4 @@
-RSpec.describe CelluloidIOPGListener::Examples::ListenerClientByInheritance do
+RSpec.describe CelluloidIOPGListener::Examples::ListenerClientByInheritance, celluloid: true do
 
   let(:channel) { "foo" }
   let(:payload) { "bar" }
@@ -26,7 +26,6 @@ RSpec.describe CelluloidIOPGListener::Examples::ListenerClientByInheritance do
         before { expect_any_instance_of(CelluloidIOPGListener::Examples::ListenerClientByInheritance).to receive(:unlisten_wrapper).and_return(true) }
         it("gets called") do
           server.ping
-          sleep(1)
         end
       end
     end
@@ -38,17 +37,16 @@ RSpec.describe CelluloidIOPGListener::Examples::ListenerClientByInheritance do
           expect(instance.callback_method).to eq callback_method
         end
         it("can have logic") do
-          expect { instance.foo_bar("smarmy", payload) }.to_not raise_error
+          expect { instance.foo_bar("users_insert", payload) }.to_not raise_error
         end
         it("can raise an error") do
-          expect { instance.foo_bar(channel, payload) }.to raise_error RuntimeError, /#{channel}:#{payload}/
+          expect { instance.foo_bar(channel, payload) }.to raise_error RuntimeError, /This example only works on the users_insert channel, you are notifying #{channel} with #{payload}/
         end
       end
       context "when triggered" do
         before { expect_any_instance_of(CelluloidIOPGListener::Examples::ListenerClientByInheritance).to receive(callback_method).and_return(true) }
         it("gets called") do
           server.ping
-          sleep(1)
         end
       end
     end

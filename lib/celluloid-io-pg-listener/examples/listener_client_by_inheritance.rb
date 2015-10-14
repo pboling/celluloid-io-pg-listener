@@ -23,10 +23,10 @@ module CelluloidIOPGListener
 
       # callback_method does *not* accept a block parameter
       def foo_bar(channel, payload)
-        # <-- within the unlisten_wrapper's block if :do_something is the callback_method
+        # <-- within the unlisten_wrapper's block if :foo_bar is the callback_method
         debug "#{self.class}##{__method__} channel: #{channel}"
         debug "#{self.class}##{__method__} payload: #{payload}"
-        raise RuntimeError, "#{channel}:#{payload}" unless channel == "smarmy"
+        raise RuntimeError, "This example only works on the users_insert channel, you are notifying #{channel} with #{payload}" unless channel == "users_insert"
       end
 
     end
