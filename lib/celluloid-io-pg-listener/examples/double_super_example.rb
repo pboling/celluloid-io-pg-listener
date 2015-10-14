@@ -34,12 +34,17 @@ end
 
 # >> a = HappyMonkey.new(callback_method: "eat_thing")
 # LOL Nothing happened.
-#             => #<HappyMonkey:0x007fc77a988340>
+#             => #<HappyMonkey:0x007f901b877528>
+#
 # >> a.eat_thing
-# "banana"
+# Dreaming about banana
 # => nil
+#
 # >> b = SillyMonkey.new(callback_method: "eat_thing")
 # LOL Nothing happened.
-#             => #<SillyMonkey:0x007fc77a95a530>
+# => #<SillyMonkey:0x007f90199199b0>
+#
 # >> b.eat_thing
 # RuntimeError: I ate a banana
+# from (irb):22:in `eat_thing'
+# 	from (irb):6:in `block in initialize'
