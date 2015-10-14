@@ -16,15 +16,17 @@ module CelluloidIOPGListener
 
     def unlisten_wrapper(channel, payload, &block)
       if block_given?
-        info "Acting on payload: #{payload} on #{channel}"
+        debug "Acting on payload: #{payload} on #{channel}"
         instance_eval(&block)
       else
-        warn "Not acting on payload: #{payload} on #{channel}"
+        info "Not acting on payload: #{payload} on #{channel}"
       end
     rescue => e
       info "#{self.class}##{callback_method} disconnected from #{channel} via #{e.class} #{e.message}"
       unlisten(channel)
       terminate
+      # Rescue the error in a daemon-error-reporter to send to Airbrake or other reporting service?
+      raise
     end
 
     def actions
@@ -45,10 +47,7 @@ module CelluloidIOPGListener
     end
 
     def start_listening
-      info "Starting Listening"
-
       @listening = true
-
       wait_for_notify do |channel, pid, payload|
         info "Received notification: #{[channel, pid, payload].inspect}"
         send(actions[channel], channel, payload)

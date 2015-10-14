@@ -15,14 +15,18 @@ module CelluloidIOPGListener
       #
       # Working Example of overridden initialize follows!
       #
-      # def initialize(*haha)
-      #   # Unlike in the original class, the prepends have been usurped since this overridden method is now highest precedence.
-      #   super(*haha)
-      #   # The initialize overrides will be called by super, and thus you have to be careful how you pass on the arguments to super.
-      # end
+      def initialize(a = nil, b = nil, bus: nil, fat: nil, **args)
+        # Unlike in the original class, the prepends have been usurped since this overridden method is now highest precedence.
+        super(subclassed_client: true, **args)
+        # The initialize overrides will be called by super, and thus you have to be careful how you pass on the arguments to super.
+      end
 
-      def foo_bar(channel, payload, &block)
-        yield if block_given?
+      # callback_method does *not* accept a block parameter
+      def foo_bar(channel, payload)
+        # <-- within the unlisten_wrapper's block if :do_something is the callback_method
+        debug "#{self.class}##{__method__} channel: #{channel}"
+        debug "#{self.class}##{__method__} payload: #{payload}"
+        raise RuntimeError, "#{channel}:#{payload}" unless channel == "smarmy"
       end
 
     end

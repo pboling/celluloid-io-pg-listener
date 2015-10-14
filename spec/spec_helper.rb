@@ -43,4 +43,14 @@ RSpec.configure do |config|
   config.order = :random
   Kernel.srand config.seed
 
+  # See https://github.com/celluloid/celluloid/wiki/Gotchas#testing
+  config.before(:each) do
+    Celluloid.boot
+  end
+  config.after(:each) do
+    Celluloid.shutdown
+  end
+
 end
+
+$CELLULOID_DEBUG = false

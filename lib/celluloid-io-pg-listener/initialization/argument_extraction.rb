@@ -6,16 +6,15 @@ module CelluloidIOPGListener
   module Initialization
     module ArgumentExtraction
 
+      # 1st initialize override invoked
       def initialize(*args)
-        puts "IN ArgumentExtraction #{args.inspect}"
         @client_extracted_signature = CelluloidIOPGListener::Initialization::ClientExtractedSignature.new(*args)
         # When called from a sub-class of a class including Client
         #   and the sub-class overrides initialize,
         #   then the execution order changes,
         #   and this method may no longer have a super.
         # However, due to the nature of the initialize method we can't tell if we have a legitimate super or not.
-        super(*@client_extracted_signature.super_signature) if defined?(super)
-        puts "OUT ArgumentExtraction"
+        super(*@client_extracted_signature.super_signature)
       end
 
       def dbname

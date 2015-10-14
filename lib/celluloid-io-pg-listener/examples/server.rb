@@ -9,7 +9,7 @@ module CelluloidIOPGListener
       prepend CelluloidIOPGListener::Initialization::ArgumentExtraction
 
       def initialize(*args)
-        info "Server will send notifications to #{dbname}:#{channel}"
+        debug "Server will send notifications to #{dbname}:#{channel}"
       end
 
       # Defaults:
@@ -33,7 +33,7 @@ module CelluloidIOPGListener
       # Helps with testing by making the notify synchronous.
       def ping
         notify(channel, Time.now.to_i)
-        info "Notified #{channel}"
+        debug "Notified #{channel}"
       end
 
       private

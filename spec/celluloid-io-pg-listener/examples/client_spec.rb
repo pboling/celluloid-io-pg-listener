@@ -41,10 +41,10 @@ RSpec.describe CelluloidIOPGListener::Examples::Client do
     end
     context "custom" do
       let(:callback_method) { :foo_bar }
-      it("can be set to an undefined method because it will be defined") do
+      it("raises on undefined method") do
         expect(instance.respond_to?(:foo_bar)).to be true
         expect(instance.callback_method).to eq :foo_bar
-        expect { instance.foo_bar(channel, payload) }.to_not raise_error
+        expect { instance.foo_bar(channel, payload) }.to raise_error CelluloidIOPGListener::Client::InvalidClient, /CelluloidIOPGListener::Examples::Client does not define a method :foo_bar with arguments \(channel, payload\)/
       end
     end
   end
