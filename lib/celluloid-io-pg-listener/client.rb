@@ -2,17 +2,27 @@
 module CelluloidIOPGListener
   module Client
 
+    class InvalidClient < StandardError; end
+
     def self.included(base)
       base.send(:include, Celluloid)
       base.send(:include, Celluloid::IO)
       base.send(:include, Celluloid::Internals::Logger)
+      # order of prepended modules is critical if they are enhancing
+      #   the same method(s), and they are.
+      base.prepend CelluloidIOPGListener::Initialization::AsyncListener
+      base.prepend CelluloidIOPGListener::Initialization::ArgumentExtraction
     end
 
     def unlisten_wrapper(channel, payload, &block)
-      info "Doing Something with Payload: #{payload} on #{channel}"
-      instance_eval(&block)
+      if block_given?
+        info "Acting on payload: #{payload} on #{channel}"
+        instance_eval(&block)
+      else
+        warn "Not acting on payload: #{payload} on #{channel}"
+      end
     rescue => e
-      info "#{self.class} disconnected from #{channel} via #{e.class} #{e.message}"
+      info "#{self.class}##{callback_method} disconnected from #{channel} via #{e.class} #{e.message}"
       unlisten(channel)
       terminate
     end
@@ -22,7 +32,7 @@ module CelluloidIOPGListener
     end
 
     def pg_connection
-      @pg_connection ||= PG.connect( dbname: @dbname )
+      @pg_connection ||= PG.connect(conninfo_hash)
     end
 
     def notify(channel, value)

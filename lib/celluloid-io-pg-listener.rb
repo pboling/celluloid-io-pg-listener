@@ -6,6 +6,11 @@ require "pg"
 # Define the namespace this gem uses
 module CelluloidIOPGListener; end
 
+require "celluloid-io-pg-listener/initialization/client_extracted_signature"
+require "celluloid-io-pg-listener/initialization/argument_extraction"
+require "celluloid-io-pg-listener/initialization/async_listener"
 require "celluloid-io-pg-listener/client"
-require "celluloid-io-pg-listener/server"
-require "celluloid-io-pg-listener/listener"
+require "celluloid-io-pg-listener/examples/client"
+require "celluloid-io-pg-listener/examples/server"
+require "celluloid-io-pg-listener/examples/listener_client_by_inheritance"
+require "celluloid-io-pg-listener/examples/notify_server_by_inheritance"
