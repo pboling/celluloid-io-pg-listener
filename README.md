@@ -45,24 +45,42 @@ Find a data base that exists that you want to run notifications through.  Won't 
 so doesn't matter which one you pick.  Then pick an arbitrary name for the channel.  Only requirement is that the server
 and the client use the same database name and channel name or they won't be communicating.
 
-In an irb session start the server, taking care to:
+In an irb session taking care to:
 - replace the database names with your own
 - replace the channel name, if you want, they are arbitrary, and don't need to be "created" in the DB.
 
+First load the examples (they are not loaded by default):
 ```ruby
 >> require "celluloid-io-pg-listener"
-
 => true
+>> require "celluloid-io-pg-listener/examples/client"
+=> true
+>> require "celluloid-io-pg-listener/examples/server"
+=> true
+>> require "celluloid-io-pg-listener/examples/listener_client_by_inheritance"
+=> true
+>> require "celluloid-io-pg-listener/examples/notify_server_by_inheritance"
+=> true
+```
 
+Then turn on debug mode to see what is happening:
+```
 >> $CELLULOID_DEBUG=true
 => true
+```
 
+Then create a server:
+```
 >> server = CelluloidIOPGListener::Examples::Server.new(dbname: "celluloid_io_pg_listener_test", channel: "users_insert")
 
 D, [2015-10-14T12:59:31.840206 #23209] DEBUG -- : Server will send notifications to celluloid_io_pg_listener_test:users_insert
 
 => #<Celluloid::Proxy::Cell(CelluloidIOPGListener::Examples::Server:0x3ff71a6f6db8) @client_extracted_signature=#<CelluloidIOPGListener::Initialization::ClientExtractedSignature:0x007fee34dec310 @channel="users_insert", @conninfo_hash={:dbname=>"celluloid_io_pg_listener_test"}, @super_signature=[]>>
 
+```
+
+Then start the server sending notifications.  There is no client listening to the notifications yet, so nothing will hear them:
+```
 >> server.start
 => #<Celluloid::Proxy::Async(CelluloidIOPGListener::Examples::Server)>
 
@@ -87,7 +105,7 @@ I, [2015-10-14T12:59:49.127509 #23223]  INFO -- : Received notification: ["users
 
 Simply exit the sessions to end the test.
 
-Or keep the client running, and only exit the server and do a real test.
+Or keep the client running, and only exit the server and do a real test with real DB triggers.
 
 If you have downloaded the gem source, cd to the gem's directory, and run `bin/setup` to create the test database.
 

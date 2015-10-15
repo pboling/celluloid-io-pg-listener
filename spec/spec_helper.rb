@@ -1,5 +1,10 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "celluloid-io-pg-listener"
+require "celluloid-io-pg-listener/examples/client"
+require "celluloid-io-pg-listener/examples/server"
+require "celluloid-io-pg-listener/examples/listener_client_by_inheritance"
+require "celluloid-io-pg-listener/examples/notify_server_by_inheritance"
+
 require "rspec"
 require "pry"
 

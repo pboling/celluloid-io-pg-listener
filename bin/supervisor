@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+# Run the supervisor from a command prompt like this:
+#
+#    bin/supervisor &
+#
+require "bundler/setup"
+require "celluloid/current"
+require "celluloid/supervision"
+require "celluloid-io-pg-listener"
+
+module CelluloidIOPGListener
+  class InsertClient
+    include CelluloidIOPGListener::Client
+    def insert_callback(channel, payload)
+      # <-- within the unlisten_wrapper's block if :insert_callback is the callback_method
+      debug "#{self.class} channel is #{channel}"
+      debug "#{self.class} payload is #{payload}"
+    end
+  end
+end
+# TODO: Update DB Connection to default to Heroku DB Connection URL, with the salesforce schema, then fallback to celluloid-io-pg-listener_test
+class ListeningGroup < Celluloid::Supervision::Container
+  supervise type: CelluloidIOPGListener::InsertClient, as: :insert_client, args: [{dbname: "celluloid_io_pg_listener_test", channel: "users_insert", callback_method: :insert_callback}]
+end
+ListeningGroup.run

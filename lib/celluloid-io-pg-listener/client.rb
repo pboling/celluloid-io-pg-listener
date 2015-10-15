@@ -5,7 +5,6 @@ module CelluloidIOPGListener
     class InvalidClient < StandardError; end
 
     def self.included(base)
-      base.send(:include, Celluloid)
       base.send(:include, Celluloid::IO)
       base.send(:include, Celluloid::Internals::Logger)
       # order of prepended modules is critical if they are enhancing
