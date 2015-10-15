@@ -217,7 +217,7 @@ dependency on this gem using the [Pessimistic Version Constraint][pvc] with two 
 For example:
 
 ```ruby
-spec.add_dependency 'celluloid-io-pg-listener', '~> 0.1'
+spec.add_dependency 'celluloid-io-pg-listener', '~> 0.2'
 ```
 
 ## License
