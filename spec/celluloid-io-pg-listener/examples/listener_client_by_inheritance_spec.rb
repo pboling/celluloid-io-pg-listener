@@ -26,6 +26,7 @@ RSpec.describe CelluloidIOPGListener::Examples::ListenerClientByInheritance, cel
         before { expect_any_instance_of(CelluloidIOPGListener::Examples::ListenerClientByInheritance).to receive(:unlisten_wrapper).and_return(true) }
         it("gets called") do
           server.ping
+          sleep(1)
         end
       end
     end
@@ -47,6 +48,7 @@ RSpec.describe CelluloidIOPGListener::Examples::ListenerClientByInheritance, cel
         before { expect_any_instance_of(CelluloidIOPGListener::Examples::ListenerClientByInheritance).to receive(callback_method).and_return(true) }
         it("gets called") do
           server.ping
+          sleep(1)
         end
       end
     end

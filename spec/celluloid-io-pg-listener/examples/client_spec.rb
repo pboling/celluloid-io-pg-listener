@@ -30,7 +30,9 @@ RSpec.describe CelluloidIOPGListener::Examples::Client, celluloid: true do
     end
   end
   describe "callback_method" do
-    let(:instance) { CelluloidIOPGListener::Examples::Client.new(dbname: "celluloid_io_pg_listener_test", channel: channel, callback_method: callback_method) }
+    let(:klass) { CelluloidIOPGListener::Examples::Client }
+    let(:instance) { klass.new(dbname: "celluloid_io_pg_listener_test", channel: channel, callback_method: callback_method) }
+    let(:server) { CelluloidIOPGListener::Examples::Server.new(dbname: "celluloid_io_pg_listener_test", channel: channel ) }
     before { instance }
     context "default" do
       let(:callback_method) { nil }
@@ -38,13 +40,33 @@ RSpec.describe CelluloidIOPGListener::Examples::Client, celluloid: true do
         expect(instance.respond_to?(:unlisten_wrapper)).to be true
         expect(instance.callback_method).to eq :unlisten_wrapper
       end
+      context "when triggered" do
+        before { expect_any_instance_of(klass).to receive(:unlisten_wrapper).and_return(true) }
+        it("gets called") do
+          server.ping
+          sleep(1)
+        end
+      end
     end
     context "custom" do
       let(:callback_method) { :foo_bar }
-      it("raises on undefined method") do
-        expect(instance.respond_to?(:foo_bar)).to be true
-        expect(instance.callback_method).to eq :foo_bar
-        expect { instance.foo_bar(channel, payload) }.to raise_error CelluloidIOPGListener::Client::InvalidClient, /CelluloidIOPGListener::Examples::Client does not define a method :foo_bar with arguments \(channel, payload\)/
+      context "when not defined" do
+        it("raises on undefined method") do
+          expect(instance.respond_to?(callback_method)).to be true
+          expect(instance.callback_method).to eq callback_method
+          expect { instance.foo_bar(channel, payload) }.to raise_error CelluloidIOPGListener::Client::InvalidClient, /CelluloidIOPGListener::Examples::Client does not define a method :#{callback_method} with arguments \(channel, payload\)/
+        end
+      end
+      context "when triggered" do
+        class CutWithFooBar < CelluloidIOPGListener::Examples::Client
+          def foo_bar(channel, payload); end
+        end
+        let(:klass) { CutWithFooBar }
+        before { expect_any_instance_of(CutWithFooBar).to receive(callback_method).and_return(true) }
+        it("gets called") do
+          server.ping
+          sleep(1)
+        end
       end
     end
   end
