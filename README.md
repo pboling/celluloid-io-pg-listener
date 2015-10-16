@@ -5,8 +5,6 @@ Simple way to NOTIFY and LISTEN to channels in PostgreSQL
 Standalone the listener client works great in an `irb` session.
 Real-world, practical, use requires a long running process, and for an example of that see [bin/supervisor](https://github.com/pboling/celluloid-io-pg-listener/blob/master/bin/supervisor)
 
-Inspired by https://gist.github.com/tpitale/3915671
-
 | Project                 |  Celluloid IO PG Listener   |
 |------------------------ | ----------------- |
 | gem name                |  celluloid-io-pg-listener   |
@@ -166,6 +164,14 @@ module CelluloidIOPGListener
   end
 end
 ```
+
+## Credits
+
+Written by Peter Boling for [Trumaker & Co](https://www.trumaker.com/)
+
+Inspired by:
+* https://gist.github.com/tpitale/3915671
+* https://blog.andyet.com/2015/04/06/postgres-pubsub-with-json
 
 ## Development
 
