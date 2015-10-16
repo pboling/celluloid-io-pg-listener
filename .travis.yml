@@ -10,3 +10,5 @@ script: "bundle exec rspec spec"
 gemfile:
   - gemfiles/rails_4.2.4.gemfile
   - gemfiles/rails_3.2.22.gemfile
+addons:
+  postgresql: "9.4" # json_build_object was introduced in 9.4
