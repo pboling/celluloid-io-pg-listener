@@ -10,7 +10,7 @@ require "celluloid-io-pg-listener/initialization/client_extracted_signature"
 require "celluloid-io-pg-listener/initialization/argument_extraction"
 require "celluloid-io-pg-listener/initialization/async_listener"
 require "celluloid-io-pg-listener/client"
-# Require manually, if you want to try them out.
+# Require manually, as in bin/console, if you want to try them out.
 # require "celluloid-io-pg-listener/examples/client"
 # require "celluloid-io-pg-listener/examples/server"
 # require "celluloid-io-pg-listener/examples/listener_client_by_inheritance"

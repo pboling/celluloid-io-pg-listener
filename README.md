@@ -21,6 +21,19 @@ Real-world, practical, use requires a long running process, and for an example o
 | author                  |  [Peter Boling](https://coderbits.com/pboling) |
 | Spread ~♡ⓛⓞⓥⓔ♡~      |  [![Endorse Me](https://api.coderwall.com/pboling/endorsecount.png)](http://coderwall.com/pboling) |
 
+## Prerequisites
+
+Compatible with Ruby 2.1+, and tested on Travis.  Might also be compatible with Ruby 2.0, but haven't had time or inclination to find out. That's why we have a fork button!
+
+Requires Celluloid greater than 0.17.2 because that release fixed an important memory leak in Celluloid.
+```
+gem "celluloid", ">= 0.17.2"
+```
+
+Currently requires pg gem v0.18.3 or greater, but really that's only because I haven't had time to test with older versions.  Feel free to do that and send a PR.
+```
+gem "pg", ">= 0.18.3"
+```
 
 ## Installation
 
