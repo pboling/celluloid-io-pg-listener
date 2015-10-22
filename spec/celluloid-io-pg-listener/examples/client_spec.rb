@@ -41,6 +41,18 @@ RSpec.describe CelluloidIOPGListener::Examples::Client, celluloid: true do
         expect(CelluloidIOPGListener::Examples::Client.new(channel: channel)).to be_a CelluloidIOPGListener::Examples::Client
       end
     end
+    context "with custom argument" do
+      it "works" do
+        expect(CelluloidIOPGListener::Examples::Client.new("thing", channel: channel).optional_arg).to eq "thing"
+      end
+    end
+    context "with recycled arguments" do
+      it "works" do
+        arguments = ["thing", channel: channel]
+        expect(CelluloidIOPGListener::Examples::Client.new(*arguments).optional_arg).to eq "thing"
+        expect(CelluloidIOPGListener::Examples::Client.new(*arguments).channel).to eq channel
+      end
+    end
   end
   describe "callback_method" do
     let(:klass) { CelluloidIOPGListener::Examples::Client }

@@ -25,14 +25,14 @@ module CelluloidIOPGListener
       def initialize(*args)
         hash_arg = args.last.is_a?(Hash) ? args.pop : {}
         # Extract the channel first, as it is required
-        @channel = hash_arg.delete(:channel) || raise(ArgumentError, "[#{self.class}] :channel is required, but got #{args} and #{hash_arg}")
+        @channel = hash_arg[:channel] || raise(ArgumentError, "[#{self.class}] :channel is required, but got #{args} and #{hash_arg}")
         # Extract the args for PG.connect
         @conninfo_hash = (hash_arg.keys & KEYS).
-          each_with_object({}) { |k,h| h.update(k => hash_arg.delete(k)) }.
+          each_with_object({}) { |k,h| h.update(k => hash_arg[k]) }.
           # Future proof. Provide a way to send in any PG.connect() options not explicitly defined in KEYS
-          merge(hash_arg.delete(:conninfo_hash) || {})
+          merge(hash_arg[:conninfo_hash] || {})
         # Add any other named parameters back to the args for super
-        args << hash_arg unless hash_arg.empty?
+        args << hash_arg
         @super_signature = args
       end
 

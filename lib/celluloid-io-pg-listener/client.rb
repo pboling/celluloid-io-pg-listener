@@ -13,6 +13,18 @@ module CelluloidIOPGListener
       base.prepend CelluloidIOPGListener::Initialization::ArgumentExtraction
     end
 
+    # Defining initialize in a class including this module is optional,
+    #   unless you have custom args you need to handle
+    #   aside from those used by the CelluloidIOPGListener::Client
+    # But if you do define it, use a splat,
+    #   hash or array splat should work,
+    #   depending on your signature needs.
+    # With either splat, only pass the splat params to super,
+    #   and handle all your custom params locally.
+    #
+    def initialize(*args)
+    end
+
     def unlisten_wrapper(channel, payload, &block)
       if block_given?
         debug "Acting on payload: #{payload} on #{channel}"

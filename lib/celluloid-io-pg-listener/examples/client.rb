@@ -4,6 +4,7 @@ module CelluloidIOPGListener
 
       include CelluloidIOPGListener::Client
 
+      attr_reader :optional_arg
       # Defining initialize is optional,
       #   unless you have custom args you need to handle
       #   aside from those used by the CelluloidIOPGListener::Client
@@ -11,12 +12,11 @@ module CelluloidIOPGListener
       #   hash or array splat should work,
       #   depending on your signature needs.
       # With either splat, only pass the splat params to super,
-      #   and handle all other params locally.
+      #   and handle all your custom params locally.
       #
-      # def initialize(optional_arg = nil, *options)
-      #   @optional_arg = optional_arg # handle it here, don't pass it on!
-      #   super(*options)
-      # end
+      def initialize(optional_arg = nil, *options)
+        @optional_arg = optional_arg # handle it here, don't pass it on!
+      end
 
       def insert_callback(channel, payload)
         # <-- within the unlisten_wrapper's block if :insert_callback is the callback_method

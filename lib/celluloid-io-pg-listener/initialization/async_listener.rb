@@ -9,11 +9,11 @@ module CelluloidIOPGListener
       def initialize(*args)
         hash_arg = args.last.is_a?(Hash) ? args.pop : {}
         warn "[#{self.class}] You have not specified a callback_method, so :unlisten_wrapper will be used." unless hash_arg[:callback_method]
-        @callback_method = hash_arg.delete(:callback_method) || :unlisten_wrapper
+        @callback_method = hash_arg[:callback_method] = hash_arg[:callback_method] || :unlisten_wrapper
         # Doesn't appear to be any other way to make it work with subclassing,
         #   due to the way Celluloid Proxies the class, and hijacks the inheritance chains
-        subclassed_client = hash_arg.delete(:subclassed_client) || false
-        args << hash_arg unless hash_arg.empty?
+        subclassed_client = hash_arg[:subclassed_client] = hash_arg[:subclassed_client] || false
+        args << hash_arg
 
         enhance_callback_method unless @callback_method == :unlisten_wrapper
 
