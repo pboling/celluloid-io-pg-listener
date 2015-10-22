@@ -14,6 +14,7 @@ fi
 psql -f bin/setup.sql -U $puser
 echo "Setup Role foss"
 psql -U $puser << EOF
+DROP DATABASE IF EXISTS celluloid_io_pg_listener_test;
 CREATE DATABASE celluloid_io_pg_listener_test;
 ALTER DATABASE celluloid_io_pg_listener_test OWNER TO "foss";
 EOF
