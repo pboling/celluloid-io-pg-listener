@@ -1,7 +1,7 @@
 PATH
   remote: ../../
   specs:
-    celluloid-io-pg-listener (0.1.0)
+    celluloid-io-pg-listener (0.2.0)
       celluloid-io (>= 0.17.2)
       pg (>= 0.18.3)
 

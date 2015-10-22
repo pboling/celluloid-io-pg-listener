@@ -1,5 +1,18 @@
 RSpec.describe CelluloidIOPGListener::Examples::Client, celluloid: true do
 
+  SUPPORTED_CHANNEL_SYNTAX_EXAMPLES = {
+      capitals: "FOO",
+      dash: "foo-bar",
+      beginning_dash: "-foo",
+      period: "foo.bar",
+      beginning_period: ".foo",
+      underscore: "foo_bar",
+      beginning_underscore: "_foo",
+      digit: "foo9",
+      beginning_digit: "9foo",
+      dollar: "foo$",
+      beginning_dollar: "$foo",
+  }
   let(:channel) { "foo" }
   let(:payload) { "bar" }
 
@@ -15,7 +28,7 @@ RSpec.describe CelluloidIOPGListener::Examples::Client, celluloid: true do
   end
 
   describe "#new" do
-    context "channel provided" do
+    context "channel not provided" do
       it("raises") do
         expect { CelluloidIOPGListener::Examples::Client.new("marble", fi: :fi) }.to raise_error ArgumentError, /\[CelluloidIOPGListener::Initialization::ClientExtractedSignature\] :channel is required, but got \["marble"\] and {:fi=>:fi}/
       end
@@ -66,6 +79,15 @@ RSpec.describe CelluloidIOPGListener::Examples::Client, celluloid: true do
         it("gets called") do
           server.ping
           sleep(1)
+        end
+        SUPPORTED_CHANNEL_SYNTAX_EXAMPLES.each do |syntax, channel|
+          context "channel name with #{syntax}" do
+            let(:channel) {channel}
+            it("#{channel} gets called") do
+              server.ping
+              sleep(1)
+            end
+          end
         end
       end
     end
