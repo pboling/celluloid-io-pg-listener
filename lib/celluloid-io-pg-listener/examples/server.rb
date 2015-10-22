@@ -42,8 +42,12 @@ module CelluloidIOPGListener
         @pg_connection ||= PG.connect(conninfo_hash)
       end
 
+      # Supported channel names are any delimited (double-quoted) identifier:
+      # We supply the double quotes, you supply the contents.
+      # If you want unicode character code support submit a pull request to make the quote style `U&"` a config setting.
+      #   See: http://www.postgresql.org/docs/9.4/static/sql-syntax-lexical.html
       def notify(channel, value)
-        pg_connection.exec("NOTIFY #{channel}, '#{value}';")
+        pg_connection.exec(%[NOTIFY "#{channel}", '#{value}';])
       end
 
     end
