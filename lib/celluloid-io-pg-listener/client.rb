@@ -9,8 +9,8 @@ module CelluloidIOPGListener
       base.send(:include, Celluloid::Internals::Logger)
       # order of prepended modules is critical if they are enhancing
       #   the same method(s), and they are.
-      base.prepend CelluloidIOPGListener::Initialization::AsyncListener
-      base.prepend CelluloidIOPGListener::Initialization::ArgumentExtraction
+      base.send(:prepend, CelluloidIOPGListener::Initialization::AsyncListener)
+      base.send(:prepend, CelluloidIOPGListener::Initialization::ArgumentExtraction)
     end
 
     # Defining initialize in a class including this module is optional,
