@@ -1,0 +1,9 @@
+listening_group:
+-
+  listener_active: true
+  type: CelluloidIOPGListener::InsertClient
+  as: insert_client
+  args:
+    dbname: "celluloid_io_pg_listener_test"
+    callback_method: insert_callback
+    channel: "users_insert"

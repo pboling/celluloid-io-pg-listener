@@ -2,6 +2,12 @@
 
 require "bundler/setup"
 require "celluloid-io-pg-listener"
+# Load the examples to make it easy to play
+require "celluloid-io-pg-listener/examples/client"
+require "celluloid-io-pg-listener/examples/double_super_example"
+require "celluloid-io-pg-listener/examples/server"
+require "celluloid-io-pg-listener/examples/listener_client_by_inheritance"
+require "celluloid-io-pg-listener/examples/notify_server_by_inheritance"
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.

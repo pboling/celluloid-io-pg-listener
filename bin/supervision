@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Run the supervisor from a command prompt like this:
 #
-#    bin/supervisor --config bin/settings.multiple.yml &
+#    bin/supervision --config bin/settings.yml &
 #
 require "erb"
 require "uri"
@@ -47,15 +47,14 @@ module CelluloidIOPGListener
 end
 
 class ListeningGroup < Celluloid::Supervision::Container
-  signatures = CelluloidIOPGListener::SupervisionConfigurationSignature.new(path_to_yaml: $supervisor_options[:config_path]).signature
-  supervise **signatures[0] if signatures[0]
-  supervise **signatures[1] if signatures[1]
-  supervise **signatures[2] if signatures[2]
+  supervise type: CelluloidIOPGListener::InsertClient, as: :insert_client, args: [{dbname: "celluloid_io_pg_listener_test", channel: "users_insert", callback_method: :insert_callback}]
 end
+
+# Alternatively:
+# class ListeningGroup < Celluloid::Supervision::Container
+#   signature = CelluloidIOPGListener::SupervisionConfigurationSignature.new(path_to_yaml: $supervisor_options[:config_path]).signature.first
+#   supervise **signature
+# end
 
 ListeningGroup.run
 
-# Not sure why this is not working
-# config_signature = CelluloidIOPGListener::SupervisionConfigurationSignature.new(path_to_yaml: $supervisor_options[:config_path]).signature
-# supervision_config = Celluloid::Supervision::Configuration.define(config_signature)
-# supervision_config.deploy

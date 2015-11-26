@@ -61,21 +61,7 @@ In an irb session taking care to:
 - replace the database names with your own
 - replace the channel name, if you want, they are arbitrary, and don't need to be "created" in the DB.
 
-First load the examples (they are not loaded by default):
-```ruby
->> require "celluloid-io-pg-listener"
-=> true
->> require "celluloid-io-pg-listener/examples/client"
-=> true
->> require "celluloid-io-pg-listener/examples/server"
-=> true
->> require "celluloid-io-pg-listener/examples/listener_client_by_inheritance"
-=> true
->> require "celluloid-io-pg-listener/examples/notify_server_by_inheritance"
-=> true
-```
-
-Then turn on debug mode to see what is happening:
+Turn on debug mode to see what is happening:
 ```
 >> $CELLULOID_DEBUG=true
 => true
