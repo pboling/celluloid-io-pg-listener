@@ -7,6 +7,7 @@ require "celluloid-io-pg-listener/examples/notify_server_by_inheritance"
 
 require "rspec"
 require "pry"
+require "celluloid/test"
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

@@ -51,6 +51,20 @@ Or install it yourself as:
 
     $ gem install celluloid-io-pg-listener
 
+## Upgrading 0.2.x to 0.3.x
+
+Change:
+```
+include CelluloidIOPGListener::Client
+```
+To:
+```
+include CelluloidIOPGListener.client(:unlisten_wrapper_with_termination)
+```
+You now have a choice of unlisten wrappers, with or without termination as part of the unlisten.
+The one without terminate is used with you are running a client inside a celluloid supervisor container, which handles termination.
+See `bin/supervisor` and `bin/supervision` in this project for two examples of this.
+
 ## Usage
 
 Find a data base that exists that you want to run notifications through.  Won't affect anything else in the database,
@@ -61,21 +75,7 @@ In an irb session taking care to:
 - replace the database names with your own
 - replace the channel name, if you want, they are arbitrary, and don't need to be "created" in the DB.
 
-First load the examples (they are not loaded by default):
-```ruby
->> require "celluloid-io-pg-listener"
-=> true
->> require "celluloid-io-pg-listener/examples/client"
-=> true
->> require "celluloid-io-pg-listener/examples/server"
-=> true
->> require "celluloid-io-pg-listener/examples/listener_client_by_inheritance"
-=> true
->> require "celluloid-io-pg-listener/examples/notify_server_by_inheritance"
-=> true
-```
-
-Then turn on debug mode to see what is happening:
+Turn on debug mode to see what is happening:
 ```
 >> $CELLULOID_DEBUG=true
 => true
@@ -151,7 +151,7 @@ module CelluloidIOPGListener
   module Examples
     class Client
 
-      include CelluloidIOPGListener::Client
+      include CelluloidIOPGListener.client(:unlisten_wrapper_with_termination)
 
       # Defining initialize is optional,
       #   unless you have custom args you need to handle

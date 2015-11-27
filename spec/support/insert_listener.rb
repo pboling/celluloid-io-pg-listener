@@ -1,6 +1,6 @@
 class InsertListener
 
-  include CelluloidIOPGListener::Client
+  include CelluloidIOPGListener.client(:unlisten_wrapper_with_termination)
 
   def insert_callback(channel, payload)
     # <-- within the unlisten_wrapper's block if :insert_callback is the callback_method

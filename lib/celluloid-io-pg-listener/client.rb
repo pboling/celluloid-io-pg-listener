@@ -25,21 +25,6 @@ module CelluloidIOPGListener
     def initialize(*args)
     end
 
-    def unlisten_wrapper(channel, payload, &block)
-      if block_given?
-        debug "Acting on payload: #{payload} on #{channel}"
-        instance_eval(&block)
-      else
-        info "Not acting on payload: #{payload} on #{channel}"
-      end
-    rescue => e
-      info "#{self.class}##{callback_method} disconnected from #{channel} via #{e.class} #{e.message}"
-      unlisten(channel)
-      terminate
-      # Rescue the error in a daemon-error-reporter to send to Airbrake or other reporting service?
-      raise
-    end
-
     def actions
       @actions ||= {}
     end
@@ -84,12 +69,6 @@ module CelluloidIOPGListener
                      ])
         end
       end
-    end
-
-    def unlisten(channel)
-      # (@listening ||= {})[channel] = false
-      stop_listening # Not sure if there is a way to stop listening to a single channel without affecting the others.
-      pg_connection.exec(%[UNLISTEN "#{channel}";])
     end
 
   end

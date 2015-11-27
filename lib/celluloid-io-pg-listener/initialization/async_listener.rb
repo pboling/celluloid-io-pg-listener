@@ -44,7 +44,11 @@ module CelluloidIOPGListener
               super(channel, payload)
             else
               error "LISTENER ERROR: #{payload}"
-              raise CelluloidIOPGListener::Client::InvalidClient, "#{self.class} does not define a method :#{@callback_method} with arguments (channel, payload)"
+              if callback_method == :unlisten_wrapper
+                raise CelluloidIOPGListener::Client::InvalidClient, "Please specify a callback_method with signature (channel, payload) to be called on an instance of #{self.class}"
+              else
+                raise CelluloidIOPGListener::Client::InvalidClient, "#{self.class} does not define a method :#{callback_method} with signature (channel, payload)"
+              end
             end
           end
         end

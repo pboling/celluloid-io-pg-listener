@@ -2,7 +2,7 @@ module CelluloidIOPGListener
   module Examples
     class Client
 
-      include CelluloidIOPGListener::Client
+      include CelluloidIOPGListener.client(:unlisten_wrapper_with_termination)
 
       attr_reader :optional_arg
       # Defining initialize is optional,

@@ -1,0 +1,25 @@
+listening_group:
+-
+  listener_active: true
+  type: CelluloidIOPGListener::Examples::Client
+  as: insert_client1
+  args:
+    dbname: "celluloid_io_pg_listener_test"
+    callback_method: insert_callback
+    channel: "users_insert"
+-
+  listener_active: true
+  type: CelluloidIOPGListener::Examples::ListenerClientByInheritance
+  as: insert_client2
+  args:
+    dbname: "celluloid_io_pg_listener_test"
+    callback_method: foo_bar
+    channel: "users_insert"
+-
+  listener_active: true
+  type: CelluloidIOPGListener::InsertClient
+  as: insert_client3
+  args:
+    dbname: "celluloid_io_pg_listener_test"
+    callback_method: insert_callback
+    channel: "users_insert"
