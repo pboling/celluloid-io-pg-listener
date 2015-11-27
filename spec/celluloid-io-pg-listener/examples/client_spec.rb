@@ -79,7 +79,7 @@ RSpec.describe CelluloidIOPGListener::Examples::Client, celluloid: true do
         it("raises on undefined method") do
           expect(instance.respond_to?(callback_method)).to be true
           expect(instance.callback_method).to eq callback_method
-          expect { instance.foo_bar(channel, payload) }.to raise_error CelluloidIOPGListener::Client::InvalidClient, /CelluloidIOPGListener::Examples::Client does not define a method :#{callback_method} with arguments \(channel, payload\)/
+          expect { instance.foo_bar(channel, payload) }.to raise_error CelluloidIOPGListener::Client::InvalidClient, /CelluloidIOPGListener::Examples::Client does not define a method :#{callback_method} with signature \(channel, payload\)/
         end
       end
       context "when triggered" do
