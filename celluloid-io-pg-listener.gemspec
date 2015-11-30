@@ -6,8 +6,8 @@ require "celluloid-io-pg-listener/version"
 Gem::Specification.new do |spec|
   spec.name          = "celluloid-io-pg-listener"
   spec.version       = CelluloidIOPGListener::VERSION
-  spec.authors       = ["Peter Boling"]
-  spec.email         = ["peter.boling@gmail.com"]
+  spec.authors       = ["Peter Boling", "Rohit Gupta"]
+  spec.email         = ["peter.boling@gmail.com", "rhitrg@gmail.com"]
 
   spec.summary       = %q{Asynchronously LISTEN for Postgresql NOTIFY messages with payloads and Do Something}
   spec.description   = %q{Asynchronously LISTEN for Postgresql NOTIFY messages with payloads and Do Something}

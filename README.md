@@ -62,7 +62,7 @@ To:
 include CelluloidIOPGListener.client(:unlisten_wrapper_with_termination)
 ```
 You now have a choice of unlisten wrappers, with or without termination as part of the unlisten.
-The one without terminate is used with you are running a client inside a celluloid supervisor container, which handles termination.
+The one without terminate is used when you are running a client inside a celluloid supervisor container, which handles termination.
 See `bin/supervisor` and `bin/supervision` in this project for two examples of this.
 
 ## Usage
@@ -180,7 +180,7 @@ end
 
 ## Credits
 
-Written by Peter Boling for [Trumaker & Co](https://www.trumaker.com/)
+Written by [Peter Boling](http://github.com/pboling) and [Rohit Gupta](http://github.com/rg) for [Trumaker & Co](https://www.trumaker.com/)
 
 Inspired by:
 * https://gist.github.com/tpitale/3915671
