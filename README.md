@@ -180,7 +180,7 @@ end
 
 ## Credits
 
-Written by Peter Boling for [Trumaker & Co](https://www.trumaker.com/)
+Written by [Peter Boling](http://github.com/pboling) and [Rohit Gupta](http://github.com/rg) for [Trumaker & Co](https://www.trumaker.com/)
 
 Inspired by:
 * https://gist.github.com/tpitale/3915671
