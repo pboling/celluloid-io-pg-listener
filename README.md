@@ -5,21 +5,31 @@ Simple way to NOTIFY and LISTEN to channels in PostgreSQL
 Standalone the listener client works great in an `irb` session.
 Real-world, practical, use requires a long running process, and for an example of that see [bin/supervisor](https://github.com/pboling/celluloid-io-pg-listener/blob/master/bin/supervisor)
 
-| Project                 |  Celluloid IO PG Listener   |
+| Project                 |  CelluloidIOPGListener    |
 |------------------------ | ----------------- |
 | gem name                |  celluloid-io-pg-listener   |
 | license                 |  MIT              |
-| moldiness               |  [![Maintainer Status](http://stillmaintained.com/pboling/celluloid-io-pg-listener.png)](http://stillmaintained.com/pboling/celluloid-io-pg-listener) |
+| expert support          |  [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/peterboling?utm_source=github&utm_medium=button&utm_term=peterboling&utm_campaign=github) |
+| download rank               |  [![Total Downloads](https://img.shields.io/gem/rt/celluloid-io-pg-listener.svg)](https://rubygems.org/gems/celluloid-io-pg-listener) |
 | version                 |  [![Gem Version](https://badge.fury.io/rb/celluloid-io-pg-listener.png)](http://badge.fury.io/rb/celluloid-io-pg-listener) |
 | dependencies            |  [![Dependency Status](https://gemnasium.com/pboling/celluloid-io-pg-listener.png)](https://gemnasium.com/pboling/celluloid-io-pg-listener) |
 | code quality            |  [![Code Climate](https://codeclimate.com/github/pboling/celluloid-io-pg-listener.png)](https://codeclimate.com/github/pboling/celluloid-io-pg-listener) |
 | inline documenation     |  [![Inline docs](http://inch-ci.org/github/pboling/celluloid-io-pg-listener.png)](http://inch-ci.org/github/pboling/celluloid-io-pg-listener) |
 | continuous integration  |  [![Build Status](https://secure.travis-ci.org/pboling/celluloid-io-pg-listener.png?branch=master)](https://travis-ci.org/pboling/celluloid-io-pg-listener) |
 | test coverage           |  [![Coverage Status](https://coveralls.io/repos/pboling/celluloid-io-pg-listener/badge.png)](https://coveralls.io/r/pboling/celluloid-io-pg-listener) |
-| homepage                |  [https://github.com/pboling/celluloid-io-pg-listener][homepage] |
-| documentation           |  [http://rdoc.info/github/pboling/celluloid-io-pg-listener/frames][documentation] |
-| author                  |  [Peter Boling](https://coderbits.com/pboling) |
-| Spread ~♡ⓛⓞⓥⓔ♡~      |  [![Endorse Me](https://api.coderwall.com/pboling/endorsecount.png)](http://coderwall.com/pboling) |
+| homepage                |  [on Github.com][homepage] |
+| documentation           |  [on Rdoc.info][documentation] |
+| live chat               |  [![Join the chat at https://gitter.im/pboling/celluloid-io-pg-listener](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/pboling/celluloid-io-pg-listener?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) |
+| Spread ~♡ⓛⓞⓥⓔ♡~      |  [on Coderbits][coderbits], [on Coderwall][coderwall] |
+
+[semver]: http://semver.org/
+[pvc]: http://docs.rubygems.org/read/chapter/16#page74
+[railsbling]: http://www.railsbling.com
+[peterboling]: http://www.peterboling.com
+[coderbits]: https://coderbits.com/pboling
+[coderwall]: http://coderwall.com/pboling
+[documentation]: http://rdoc.info/github/pboling/celluloid-io-pg-listener/frames
+[homepage]: https://github.com/pboling/celluloid-io-pg-listener
 
 ## Prerequisites
 
@@ -244,8 +254,4 @@ spec.add_dependency 'celluloid-io-pg-listener', '~> 0.2'
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
-[semver]: http://semver.org/
-[pvc]: http://docs.rubygems.org/read/chapter/16#page74
-[railsbling]: http://www.railsbling.com
-[documentation]: http://rdoc.info/github/pboling/celluloid-io-pg-listener/frames
-[homepage]: https://github.com/pboling/celluloid-io-pg-listener
+
