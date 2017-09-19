@@ -8,7 +8,7 @@ Real-world, practical, use requires a long running process, and for an example o
 | Project                 |  CelluloidIOPGListener    |
 |------------------------ | ----------------- |
 | gem name                |  celluloid-io-pg-listener   |
-| license                 |  MIT              |
+| license                 |  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) |
 | expert support          |  [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/peterboling?utm_source=github&utm_medium=button&utm_term=peterboling&utm_campaign=github) |
 | download rank               |  [![Total Downloads](https://img.shields.io/gem/rt/celluloid-io-pg-listener.svg)](https://rubygems.org/gems/celluloid-io-pg-listener) |
 | version                 |  [![Gem Version](https://badge.fury.io/rb/celluloid-io-pg-listener.png)](http://badge.fury.io/rb/celluloid-io-pg-listener) |
