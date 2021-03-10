@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 12.3"
   spec.add_development_dependency "rspec", "~> 3.3"
-  spec.add_development_dependency "rspec-rails", "~> 3.3"
+  spec.add_development_dependency "rspec-rails", "~> 5.0"
   spec.add_development_dependency "appraisal", "~> 2.1"
   spec.add_development_dependency "activerecord", ">= 3.2"
   spec.add_development_dependency "database_cleaner", "~> 1.5"
