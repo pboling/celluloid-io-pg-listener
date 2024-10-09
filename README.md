@@ -18,9 +18,9 @@ Real-world, practical, use requires a long running process, and for an example o
 | continuous integration  |  [![Build Status](https://secure.travis-ci.org/pboling/celluloid-io-pg-listener.png?branch=master)](https://travis-ci.org/pboling/celluloid-io-pg-listener) |
 | test coverage           |  [![Coverage Status](https://coveralls.io/repos/pboling/celluloid-io-pg-listener/badge.png)](https://coveralls.io/r/pboling/celluloid-io-pg-listener) |
 | homepage                |  [on Github.com][homepage] |
-| documentation           |  [on Rdoc.info][documentation] |
+| documentation           |  [on RubyDoc.info][documentation] |
 | live chat               |  [![Join the chat at https://gitter.im/pboling/celluloid-io-pg-listener](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/pboling/celluloid-io-pg-listener?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) |
-| Spread ~♡ⓛⓞⓥⓔ♡~      |  [🌏](https://about.me/peter.boling), [👼](https://angel.co/peter-boling), [:shipit:](http://coderwall.com/pboling), [![Tweet Peter](https://img.shields.io/twitter/follow/galtzo.svg?style=social&label=Follow)](http://twitter.com/galtzo), [🌹](https://nationalprogressiveparty.org) |
+| Spread ~♡ⓛⓞⓥⓔ♡~      |  [🌏](https://about.me/peter.boling), [👼](https://angel.co/peter-boling), [:shipit:](http://coderwall.com/pboling), [![Tweet Peter](https://img.shields.io/twitter/follow/galtzo.svg?style=social&label=Follow)](http://twitter.com/galtzo) |
 
 [semver]: http://semver.org/
 [pvc]: http://docs.rubygems.org/read/chapter/16#page74
@@ -28,7 +28,7 @@ Real-world, practical, use requires a long running process, and for an example o
 [peterboling]: http://www.peterboling.com
 [coderbits]: https://coderbits.com/pboling
 [coderwall]: http://coderwall.com/pboling
-[documentation]: http://rdoc.info/github/pboling/celluloid-io-pg-listener/frames
+[documentation]: http://rubydoc.info/gems/celluloid-io-pg-listener
 [homepage]: https://github.com/pboling/celluloid-io-pg-listener
 
 ## Prerequisites
